@@ -5,6 +5,7 @@ import pyaudio
 import numpy as np
 from PyQt4 import QtGui, QtCore
 import datetime
+from gcp_functions import *
 
 class MicrophoneRecorder(object):
     def __init__(self, rate=4000, chunksize=1024):
@@ -110,6 +111,9 @@ class LiveFFTWidget(QtGui.QWidget):
             fft_frame = np.fft.rfft(current_frame)
             
             fft_frame /= np.abs(fft_frame).max()
+
+
+            
             
             #FFT ANALYSIS
 
@@ -124,6 +128,9 @@ class LiveFFTWidget(QtGui.QWidget):
                     print 'potential siren detected recorded at %s.\n' % (datetime.datetime.now())
                     with open("siren_log.txt", mode='a') as file:
                         file.write('potential siren recorded at %s.\n' % (datetime.datetime.now()))
+                    message1 = 'potential siren recorded at %s.\n' % (datetime.datetime.now())
+                    publish_message('atomicity-messages',message1)
+                    
            
            
             for x in combined:
@@ -131,11 +138,15 @@ class LiveFFTWidget(QtGui.QWidget):
                     print 'siren 3 (police car) detected recorded at %s.\n' % (datetime.datetime.now())
                     with open("siren_log.txt", mode='a') as file:
                         file.write('siren 3 (police car) recorded at %s.\n' % (datetime.datetime.now()))
+                    message2 = 'siren 3 (police car) recorded at %s.\n' % (datetime.datetime.now())
+                    publish_message('atomicity-messages',message2)
             for x in combined:
                 if x[1] == [1.0] and 1700 < x[0] < 1750:
                     print 'siren 2 (fire engine) detected recorded at %s.\n' % (datetime.datetime.now())
                     with open("siren_log.txt", mode='a') as file:
                         file.write('siren 2 (fire engine) recorded at %s.\n' % (datetime.datetime.now()))
+                    message3 = 'siren 2 (fire engine) recorded at %s.\n' % (datetime.datetime.now())
+                    publish_message('atomicity-messages',message3)
             
             # return modal frequency
             #
