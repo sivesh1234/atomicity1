@@ -48,52 +48,30 @@ class MicrophoneRecorder(object):
         self.p.terminate()
 
 
-class LiveFFTWidget(QtGui.QWidget):
+class LiveSoundAnalysis:
     def __init__(self):
-        QtGui.QWidget.__init__(self)
-
-        # customize the UI
-        self.initUI()
-
         # init class data
         self.initData()
-
         # connect slots
         self.connectSlots()
-
-        # init MPL widget
-        self.initMplWidget()
-
-    def initUI(self):
-        
-        timer = QtCore.QTimer()
-        timer.timeout.connect(self.handleNewData)
-        timer.start(50)
-        # keep reference to timer
-        self.timer = timer
-
+        while 1:
+            self.handleNewData()
 
     def initData(self):
         mic = MicrophoneRecorder()
-        mic.start()
+        
 
         # keeps reference to mic
         self.mic = mic
+        self.mic.start()
 
         # computes the parameters that will be used during plotting
         self.freq_vect = np.fft.rfftfreq(mic.chunksize,
                                          1./mic.rate)
         self.time_vect = np.arange(mic.chunksize, dtype=np.float32) / mic.rate * 1000
-        
 
     def connectSlots(self):
         pass
-
-    def initMplWidget(self):
-        """creates initial matplotlib plots in the main window and keeps
-        references for further use"""
-        
-
         
     def handleNewData(self):
         """ handles the asynchroneously collected sound chunks """
@@ -112,9 +90,6 @@ class LiveFFTWidget(QtGui.QWidget):
             
             fft_frame /= np.abs(fft_frame).max()
 
-
-            
-            
             #FFT ANALYSIS
 
             #CREATES FFT ARRAY
@@ -130,9 +105,6 @@ class LiveFFTWidget(QtGui.QWidget):
                         file.write('potential siren recorded at %s.\n' % (datetime.datetime.now()))
                     message1 = 'potential siren recorded at %s.\n' % (datetime.datetime.now())
                     publish_message('atomicity-messages',message1)
-                    
-           
-           
             for x in combined:
                 if x[1] == [1.0] and 1400 < x[0] < 1600:
                     print 'siren 3 (police car) detected recorded at %s.\n' % (datetime.datetime.now())
@@ -149,14 +121,11 @@ class LiveFFTWidget(QtGui.QWidget):
                     publish_message('atomicity-messages',message3)
             
             # return modal frequency
-            #
             #for x in combined:
-               # if x[1] == [1.0]:
-                 #  print x[0]
+                #if x[1] == [1.0]:
+                   #print x[0]
 
-if __name__ == "__main__":
-    app = QtGui.QApplication(sys.argv)
-    window = LiveFFTWidget()
-    print "LISTENING..."
-sys.exit(app.exec_())
 
+
+
+a = LiveSoundAnalysis()
