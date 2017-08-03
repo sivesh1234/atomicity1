@@ -110,21 +110,22 @@ class LiveSoundAnalysis:
                 if x[1] == [1.0] and 1400 < x[0] < 1600:
                     print 'siren 3 (police car) detected recorded at %s.\n' % (datetime.datetime.now())
                     with open("siren_log.txt", mode='a') as file:
-                        file.write('siren 3 (police car) recorded at %s.\n' % (datetime.datetime.now()))
-                    message2 = 'siren 3 (police car) recorded at %s.\n' % (datetime.datetime.now())
+                        file.write('(police car) recorded at %s.\n' % (datetime.datetime.now()))
+                    message2 = '(police car) recorded at %s.\n' % (datetime.datetime.now())
                     publish_message('atomicity-messages',message2)
             for x in combined:
                 if x[1] == [1.0] and 1700 < x[0] < 1750:
                     print 'siren 2 (fire engine) detected recorded at %s.\n' % (datetime.datetime.now())
                     with open("siren_log.txt", mode='a') as file:
-                        file.write('siren 2 (fire engine) recorded at %s.\n' % (datetime.datetime.now()))
-                    message3 = 'siren 2 (fire engine) recorded at %s.\n' % (datetime.datetime.now())
+                        file.write('(fire engine) recorded at %s.\n' % (datetime.datetime.now()))
+                    message3 = '(fire engine) recorded at %s.\n' % (datetime.datetime.now())
                     publish_message('atomicity-messages',message3)
             
-            #return modal frequency
-            for x in combined:
-                if x[1] == [1.0]:
-                   print x[0]
+            
+            #TEST - returns modal frequency
+            #for x in combined:
+                #if x[1] == [1.0]:
+                   #print x[0]
 
 
 
