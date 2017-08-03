@@ -9,7 +9,7 @@ from PyQt4 import QtGui, QtCore
 from gcp_functions import *
 #Script found online to gather PyAudio frames
 class MicrophoneRecorder(object):
-    def __init__(self, rate=1000, chunksize=1024):
+    def __init__(self, rate=4000, chunksize=1024):
         self.rate = rate
         self.chunksize = chunksize
         self.p = pyaudio.PyAudio()
