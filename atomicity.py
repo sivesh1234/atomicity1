@@ -5,7 +5,6 @@ import atexit
 import pyaudio
 import numpy as np
 import datetime
-from PyQt4 import QtGui, QtCore
 from gcp_functions import *
 #Script found online to gather PyAudio frames
 class MicrophoneRecorder(object):
