@@ -2,9 +2,10 @@ import argparse
 import os
 from google.cloud import pubsub
 
+dir_path = str(os.path.dirname(os.path.realpath('gcp_functions.py')))
 os.environ["GOOGLE_CLOUD_PROJECT"] = 'Small-Vivacity-Projects'
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = './backend/secrets/Small-Vivacity-Projects-f502d9066757.json'
-pubsub_client = pubsub.Client().from_service_account_json('./backend/secrets/Small-Vivacity-Projects-f502d9066757.json')
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = '%s/backend/secrets/Small-Vivacity-Projects-f502d9066757.json'%dir_path
+pubsub_client = pubsub.Client().from_service_account_json('%s/backend/secrets/Small-Vivacity-Projects-f502d9066757.json'%dir_path)
 #topic = pubsub_client.topic(topic)
 
 

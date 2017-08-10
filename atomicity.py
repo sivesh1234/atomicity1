@@ -6,9 +6,11 @@ import pyaudio
 import numpy as np
 import datetime
 from gcp_functions import *
+from audio_recorder import *
 #Script found online to gather PyAudio frames
+
 class MicrophoneRecorder(object):
-    def __init__(self, rate=4000, chunksize=1024):
+    def __init__(self, rate=8000, chunksize=1024):
         self.rate = rate
         self.chunksize = chunksize
         self.p = pyaudio.PyAudio()
@@ -106,19 +108,23 @@ class LiveSoundAnalysis:
                     publish_message('atomicity-messages',message1)
                     
             for x in combined:
-                if x[1] == [1.0] and 1400 < x[0] < 1600:
+                if x[1] > [0.8] and 1300 < x[0] < 1600:
                     print 'siren 3 (police car) detected recorded at %s.\n' % (datetime.datetime.now())
                     with open("siren_log.txt", mode='a') as file:
                         file.write('(police car) recorded at %s.\n' % (datetime.datetime.now()))
                     message2 = '(police car) recorded at %s.\n' % (datetime.datetime.now())
                     publish_message('atomicity-messages',message2)
+                    record_audio()
+                    time.sleep(15)
             for x in combined:
-                if x[1] == [1.0] and 1700 < x[0] < 1750:
-                    print 'siren 2 (fire engine) detected recorded at %s.\n' % (datetime.datetime.now())
+                if x[1] > [0.8] and 1700 < x[0] < 1750:
+                    print 'siren 2 (ambulance) detected recorded at %s.\n' % (datetime.datetime.now())
                     with open("siren_log.txt", mode='a') as file:
-                        file.write('(fire engine) recorded at %s.\n' % (datetime.datetime.now()))
-                    message3 = '(fire engine) recorded at %s.\n' % (datetime.datetime.now())
+                        file.write('(ambulance) recorded at %s.\n' % (datetime.datetime.now()))
+                    message3 = '(ambulance) recorded at %s.\n' % (datetime.datetime.now())
                     publish_message('atomicity-messages',message3)
+                    record_audio()
+                    time.sleep(15)
             
             
             #TEST - returns modal frequency
