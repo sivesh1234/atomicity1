@@ -7,7 +7,7 @@ import numpy as np
 import datetime
 from gcp_functions import *
 from audio_recorder import *
-#Script found online to gather PyAudio frames
+#Script to gather PyAudio frames
 
 class MicrophoneRecorder(object):
     def __init__(self, rate=8000, chunksize=1024):
