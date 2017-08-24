@@ -108,7 +108,7 @@ class LiveSoundAnalysis:
                     publish_message('atomicity-messages',message1)
                     
             for x in combined:
-                if x[1] > [0.8] and 1300 < x[0] < 1600:
+                if x[1] > [0.9] and 1300 < x[0] < 1600:
                     print 'siren 3 (police car) detected recorded at %s.\n' % (datetime.datetime.now())
                     with open("siren_log.txt", mode='a') as file:
                         file.write('(police car) recorded at %s.\n' % (datetime.datetime.now()))
@@ -117,7 +117,7 @@ class LiveSoundAnalysis:
                     record_audio()
                     time.sleep(15)
             for x in combined:
-                if x[1] > [0.8] and 1700 < x[0] < 1750:
+                if x[1] > [0.85] and 1700 < x[0] < 1750:
                     print 'siren 2 (ambulance) detected recorded at %s.\n' % (datetime.datetime.now())
                     with open("siren_log.txt", mode='a') as file:
                         file.write('(ambulance) recorded at %s.\n' % (datetime.datetime.now()))
